@@ -50,6 +50,7 @@ public class FlashingMathModule : MonoBehaviour {
         Operators = new int[2];
         SolNumbers = new int[indicatorCount];
 
+        reset:
         PAREN_POS = Random.Range(0, 2);
         Operators[0] = Random.Range(0, 4);
         Operators[1] = Random.Range(0, 4);
@@ -58,10 +59,9 @@ public class FlashingMathModule : MonoBehaviour {
             var j = i;
             Buttons[j].OnInteract += delegate { HandlePress(j); return false; };
             Colors[i] = Random.Range(0, 7);
-            //Numbers[i] = Random.Range(0, 10);
             Numbers[i] = Random.Range(1, 36);
             Flashes[i] = MorseToBoolArray(MORSE_SYMBOLS[Numbers[i]]);
-            Debug.LogFormat("[ColorMorse #{0}] Number {1} is a {2} {3}", thisLoggingID, i, ColorNames[Colors[i]], Numbers[i]);
+            Debug.LogFormat("[ColorMorse #{0}] Number {1} is a {2} {3} ({4})", thisLoggingID, i, ColorNames[Colors[i]], Numbers[i], SYMBOLS[Numbers[i]]);
         }
 
         Debug.LogFormat("[ColorMorse #{0}] Parentheses Location: {1}", thisLoggingID, PAREN_POS == 0 ? "LEFT" : "RIGHT");
@@ -92,6 +92,9 @@ public class FlashingMathModule : MonoBehaviour {
             sol = Op2(Op1(SolNumbers[0], SolNumbers[1]), SolNumbers[2]);
         } else {
             sol = Op1(SolNumbers[0], Op2(SolNumbers[1], SolNumbers[2]));
+        }
+        if (float.IsInfinity(sol) || float.IsNaN(sol)) {
+            goto reset;
         }
         sign = Mathf.Sign(sol);
         solutionNum = Mathf.FloorToInt(Mathf.Abs(sol));
@@ -174,7 +177,8 @@ public class FlashingMathModule : MonoBehaviour {
             }
         } else {
             BombModule.HandleStrike();
-            Debug.LogFormat("[ColorMorse #{0}] Submitted '{1}' incorrectly. Current Submission: \"{2}\"", thisLoggingID, nextChar, SubmittedSolution);
+            Debug.LogFormat("[ColorMorse #{0}] Submitted '{1}' incorrectly. Current Submission: \"{2}\". Reseting submission.", thisLoggingID, nextChar, SubmittedSolution);
+            SubmittedSolution = "";
         }
         return false;
     }

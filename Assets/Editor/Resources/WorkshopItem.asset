@@ -13,10 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorkshopPublishedFileID: 1096373999
   Title: Color Morse
-  Description: "Do you like math? Do you like Morse code? Do you like many lights
-    flashing at once? Well, I've got the module for you!\n\nDesigned by SKiPP, Zeke,
-    and ZekNikZ. Implemented by ZekNikZ.\r\n\nModule ID: ColorMorseModule\r\n\nManuals\nHTML:
-    https://ktane.timwi.de/HTML/Color%20Morse.html\nPDF: https://ktane.timwi.de/PDF/Color%20Morse.html"
-  PreviewImage: {fileID: 2800000, guid: 6958306dc45617a478427d8038325013, type: 3}
   Tags:
   - Regular Module
