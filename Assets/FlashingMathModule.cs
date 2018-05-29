@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using rnd = UnityEngine.Random;
 
 public class FlashingMathModule : MonoBehaviour {
 
@@ -51,15 +55,15 @@ public class FlashingMathModule : MonoBehaviour {
         SolNumbers = new int[indicatorCount];
 
         reset:
-        PAREN_POS = Random.Range(0, 2);
-        Operators[0] = Random.Range(0, 4);
-        Operators[1] = Random.Range(0, 4);
+        PAREN_POS = rnd.Range(0, 2);
+        Operators[0] = rnd.Range(0, 4);
+        Operators[1] = rnd.Range(0, 4);
 
         for (int i = 0; i < indicatorCount; i++) {
             var j = i;
             Buttons[j].OnInteract += delegate { HandlePress(j); return false; };
-            Colors[i] = Random.Range(0, 7);
-            Numbers[i] = Random.Range(1, 36);
+            Colors[i] = rnd.Range(0, 7);
+            Numbers[i] = rnd.Range(1, 36);
             Flashes[i] = MorseToBoolArray(MORSE_SYMBOLS[Numbers[i]]);
             Debug.LogFormat("[ColorMorse #{0}] Number {1} is a {2} {3} ({4})", thisLoggingID, i, ColorNames[Colors[i]], Numbers[i], SYMBOLS[Numbers[i]]);
         }
@@ -264,5 +268,54 @@ public class FlashingMathModule : MonoBehaviour {
                 return 0;
         }
     }
+
+#pragma warning disable 414
+	private string TwitchHelpMessage = "Submit some morse code using !{0} transmit ....- --...";
+#pragma warning restore 414
+
+	private IEnumerator ProcessTwitchCommand(string command)
+	{
+		var commands = command.ToLowerInvariant().Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+		if (commands.Length >= 2 && (commands[0] == "transmit" || commands[0] == "submit" || commands[0] == "trans" || commands[0] == "tx" || commands[0] == "xmit"))
+		{
+			List<int> buttonIndexes = new List<int>();
+			foreach (string morse in commands.Skip(1))
+			{
+				foreach (char character in morse)
+				{
+
+					int index = 0;
+					switch (character)
+					{
+						case '.':
+							index = 0;
+							break;
+						case '-':
+							index = 1;
+							break;
+						default:
+							yield break;
+					}
+
+					buttonIndexes.Add(index);
+				}
+
+				buttonIndexes.Add(2);
+			}
+
+			yield return null;
+			foreach (int index in buttonIndexes.Take(buttonIndexes.Count - 1))
+			{
+				yield return Buttons[index];
+				yield return null;
+				yield return Buttons[index];
+				yield return null;
+			}
+		} else
+		{
+			yield break;
+		}
+	}
 
 }
