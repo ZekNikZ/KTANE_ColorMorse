@@ -87,17 +87,23 @@ public class FlashingMathModule : MonoBehaviour {
         }
 
         Solution = "";
-        float sign, sol;
-        if (PAREN_POS == 0) {
-            sol = Op2(Op1(SolNumbers[0], SolNumbers[1]), SolNumbers[2]);
-        } else {
-            sol = Op1(SolNumbers[0], Op2(SolNumbers[1], SolNumbers[2]));
-        }
-        if (float.IsInfinity(sol) || float.IsNaN(sol)) {
+        decimal sign, sol;
+        try {
+            if (PAREN_POS == 0) {
+                sol = Op2(Op1(SolNumbers[0], SolNumbers[1]), SolNumbers[2]);
+            } else {
+                sol = Op1(SolNumbers[0], Op2(SolNumbers[1], SolNumbers[2]));
+            }
+            /*
+            if (double.IsInfinity(sol) || double.IsNaN(sol)) {
+                goto reset;
+            }
+            */
+        } catch (System.DivideByZeroException) {
             goto reset;
         }
-        sign = Mathf.Sign(sol);
-        solutionNum = Mathf.FloorToInt(Mathf.Abs(sol));
+        sign = System.Math.Sign(sol);
+        solutionNum = (int) System.Math.Abs(sol);
 
         if (sign == -1 && solutionNum != 0) Solution = "-....- ";
 
@@ -229,7 +235,7 @@ public class FlashingMathModule : MonoBehaviour {
         return result;
     }
 
-    float Op1(float x, float y) {
+    decimal Op1(decimal x, decimal y) {
         switch (Operators[0]) {
             case 0:
                 return x + y;
@@ -244,7 +250,7 @@ public class FlashingMathModule : MonoBehaviour {
         }
     }
 
-    float Op2(float x, float y) {
+    decimal Op2(decimal x, decimal y) {
         switch (Operators[1]) {
             case 0:
                 return x + y;

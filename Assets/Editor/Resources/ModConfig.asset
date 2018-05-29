@@ -17,6 +17,6 @@ MonoBehaviour:
     flashing at once? Well, I've got the module for you!\r\n\r\nDesigned by SKiPP,
     Zeke, and ZekNikZ. Implemented by ZekNikZ.\r\n\r\nModule ID: ColorMorseModule\r\n\r\nManuals\r\nHTML:
     https://ktane.timwi.de/HTML/Color%20Morse.html\r\nPDF: https://ktane.timwi.de/PDF/Color%20Morse.html"
-  version: 2.0
+  version: 2.1
   outputFolder: build
-  previewImage: {fileID: 2800000, guid: 6958306dc45617a478427d8038325013, type: 3}
+  previewImage: {fileID: 2800000, guid: 249863e07c6cd80498af361cc71535d9, type: 3}
