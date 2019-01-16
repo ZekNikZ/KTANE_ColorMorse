@@ -500,6 +500,7 @@ GameObject:
   - component: {fileID: 4452363036648254}
   - component: {fileID: 33365468962384148}
   - component: {fileID: 23163244600692936}
+  - component: {fileID: 114334582319680704}
   m_Layer: 0
   m_Name: Screen
   m_TagString: Untagged
@@ -517,6 +518,7 @@ GameObject:
   - component: {fileID: 4731178690225260}
   - component: {fileID: 33260555130588488}
   - component: {fileID: 23574339357866522}
+  - component: {fileID: 114374301900755330}
   m_Layer: 0
   m_Name: Frame
   m_TagString: Untagged
@@ -2349,6 +2351,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - GUI/KT 3D Text
+--- !u!114 &114334582319680704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1204763348458292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - KT/Mobile/DiffuseTint
+--- !u!114 &114374301900755330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1637903890551886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - KT/Mobile/DiffuseTint
 --- !u!135 &135000010491985402
 SphereCollider:
   m_ObjectHideFlags: 1

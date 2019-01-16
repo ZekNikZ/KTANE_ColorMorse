@@ -275,18 +275,11 @@ public class ColorMorseModule : MonoBehaviour
     }
 
 #pragma warning disable 414
-    private readonly string TwitchHelpMessage = "!{0} transmit ....- --... | !{0} transmit space";
+    private readonly string TwitchHelpMessage = "!{0} transmit ....- --...";
 #pragma warning restore 414
 
     private IEnumerator ProcessTwitchCommand(string command)
     {
-        if (Regex.IsMatch(command, @"^\s*(transmit|submit|trans|tx|xmit)?\s*space\s*$"))
-        {
-            yield return null;
-            yield return new[] { Buttons[2] };
-            yield break;
-        }
-
         var commands = command.ToLowerInvariant().Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
         if (commands.Length < 2 || (commands[0] != "transmit" && commands[0] != "submit" && commands[0] != "trans" && commands[0] != "tx" && commands[0] != "xmit"))
