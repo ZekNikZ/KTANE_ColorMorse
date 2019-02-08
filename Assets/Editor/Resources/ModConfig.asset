@@ -13,10 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: ColorMorse
   title: Color Morse
-  description: "Do you like math? Do you like Morse code? Do you like many lights
-    flashing at once? Well, I've got the module for you!\r\n\r\nDesigned by SKiPP,
-    Zeke, and ZekNikZ. Implemented by ZekNikZ.\r\n\r\nModule ID: ColorMorseModule\r\n\r\nManuals\r\nHTML:
-    https://ktane.timwi.de/HTML/Color%20Morse.html\r\nPDF: https://ktane.timwi.de/PDF/Color%20Morse.html"
+  description: "[b]This is a re-upload with additions and fixes. Please unsubscribe
+    from [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1096373999]the
+    old version[/url].[/b]\n\r\nDo you like math? Do you like Morse code? Do you like
+    many lights flashing at once? Well, I've got the module for you!\r\n\nDesigned
+    by SKiPP, Zeke, and ZekNikZ. Implemented by ZekNikZ.\r Maintained by Timwi.\n\r\nModule
+    ID: ColorMorseModule\r\n\r\n[url=https://ktane.timwi.de/HTML/Color%20Morse.html\r]Manual
+    HTML[/url]\n[url=https://ktane.timwi.de/PDF/Color%20Morse.pdf]Manual PDF[/url]"
   version: 2.2
   outputFolder: build
-  previewImage: {fileID: 2800000, guid: 249863e07c6cd80498af361cc71535d9, type: 3}
+  previewImage: {fileID: 2800000, guid: c1e46ca921f6b0e40aea9f365985687b, type: 3}
