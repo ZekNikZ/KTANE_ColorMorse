@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 using Rnd = UnityEngine.Random;
@@ -35,6 +34,7 @@ public class ColorMorseModule : MonoBehaviour
 
     private static int _moduleIdCounter = 1;
     private int _moduleId;
+    private bool _isSolved;
 
     private const string SYMBOLS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private readonly string[] MORSE_SYMBOLS = {
@@ -161,6 +161,8 @@ public class ColorMorseModule : MonoBehaviour
     {
         Audio.PlaySoundAtTransform("ColorMorseButtonPress", transform);
         Buttons[button].AddInteractionPunch();
+        if (_isSolved)
+            return false;
         char nextChar;
         switch (button)
         {
@@ -185,6 +187,7 @@ public class ColorMorseModule : MonoBehaviour
             if (Solution.Length == SubmittedSolution.Length)
             {
                 BombModule.HandlePass();
+                _isSolved = true;
                 Debug.LogFormat("[Color Morse #{0}] Full solution submitted.", _moduleId);
                 flashingEnabled = false;
                 for (int i = 0; i < indicatorCount; i++)
