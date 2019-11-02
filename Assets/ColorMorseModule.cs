@@ -99,7 +99,7 @@ public class ColorMorseModule : MonoBehaviour
         }
 
         Solution = "";
-        decimal sign, sol;
+        double sign, sol;
         try
         {
             sol = PAREN_POS == 0
@@ -110,6 +110,8 @@ public class ColorMorseModule : MonoBehaviour
         {
             goto reset;
         }
+        if (double.IsInfinity(sol) || double.IsNaN(sol))
+            goto reset;
         sign = Math.Sign(sol);
         solutionNum = (int) Math.Abs(sol);
 
@@ -260,7 +262,7 @@ public class ColorMorseModule : MonoBehaviour
         return result;
     }
 
-    decimal Op(int op, decimal x, decimal y)
+    double Op(int op, double x, double y)
     {
         switch (op)
         {
