@@ -57,6 +57,9 @@ public class ColorMorseModule : MonoBehaviour
         Operators = new int[2];
         SolNumbers = new int[indicatorCount];
 
+        for (int i = 0; i < indicatorCount; i++)
+            Buttons[i].OnInteract += HandlePress(i);
+
         reset:
         PAREN_POS = Rnd.Range(0, 2);
         Operators[0] = Rnd.Range(0, 4);
@@ -64,39 +67,14 @@ public class ColorMorseModule : MonoBehaviour
 
         for (int i = 0; i < indicatorCount; i++)
         {
-            var j = i;
-            Buttons[j].OnInteract += delegate { HandlePress(j); return false; };
             Colors[i] = Rnd.Range(0, 7);
             Numbers[i] = Rnd.Range(1, 36);
             Flashes[i] = MorseToBoolArray(MORSE_SYMBOLS[Numbers[i]]);
-            Debug.LogFormat("[Color Morse #{0}] Number {1} is a {2} {3} ({4})", _moduleId, i, ColorNames[Colors[i]], Numbers[i], SYMBOLS[Numbers[i]]);
         }
-
-        Debug.LogFormat("[Color Morse #{0}] Parentheses Location: {1}", _moduleId, PAREN_POS == 0 ? "LEFT" : "RIGHT");
-        Debug.LogFormat("[Color Morse #{0}] Operators: {1} and {2}", _moduleId, OPERATION_SYMBOLS[Operators[0]], OPERATION_SYMBOLS[Operators[1]]);
-
 
         int solutionNum;
-        if (PAREN_POS == 0)
-        {
-            Labels[0].text = "(";
-            Labels[3].gameObject.SetActive(false);
-            Labels[1].text = "" + OPERATION_SYMBOLS[Operators[0]];
-            Labels[2].text = ")" + OPERATION_SYMBOLS[Operators[1]];
-        }
-        else
-        {
-            Labels[0].gameObject.SetActive(false);
-            Labels[3].text = ")";
-            Labels[1].text = OPERATION_SYMBOLS[Operators[0]] + "(";
-            Labels[2].text = "" + OPERATION_SYMBOLS[Operators[1]];
-        }
-
         for (int i = 0; i < indicatorCount; i++)
-        {
             SolNumbers[i] = DoColorOperation(Colors[i], Numbers[i]);
-            Debug.LogFormat("[Color Morse #{0}] Number {1} after color operation is {2}", _moduleId, i, SolNumbers[i]);
-        }
 
         Solution = "";
         double sign, sol;
@@ -122,7 +100,30 @@ public class ColorMorseModule : MonoBehaviour
             Solution += MORSE_SYMBOLS[SYMBOLS.IndexOf(c)] + " ";
         }
         Solution = Solution.Trim();
+
+        if (PAREN_POS == 0)
+        {
+            Labels[0].text = "(";
+            Labels[3].gameObject.SetActive(false);
+            Labels[1].text = "" + OPERATION_SYMBOLS[Operators[0]];
+            Labels[2].text = ")" + OPERATION_SYMBOLS[Operators[1]];
+        }
+        else
+        {
+            Labels[0].gameObject.SetActive(false);
+            Labels[3].text = ")";
+            Labels[1].text = OPERATION_SYMBOLS[Operators[0]] + "(";
+            Labels[2].text = "" + OPERATION_SYMBOLS[Operators[1]];
+        }
+
+        for (int i = 0; i < indicatorCount; i++)
+            Debug.LogFormat("[Color Morse #{0}] Number {1} is a {2} {3} ({4})", _moduleId, i, ColorNames[Colors[i]], Numbers[i], SYMBOLS[Numbers[i]]);
+        Debug.LogFormat("[Color Morse #{0}] Parentheses location: {1}", _moduleId, PAREN_POS == 0 ? "LEFT" : "RIGHT");
+        Debug.LogFormat("[Color Morse #{0}] Operators: {1} and {2}", _moduleId, OPERATION_SYMBOLS[Operators[0]], OPERATION_SYMBOLS[Operators[1]]);
+        for (int i = 0; i < indicatorCount; i++)
+            Debug.LogFormat("[Color Morse #{0}] Number {1} after color operation is {2}", _moduleId, i, SolNumbers[i]);
         Debug.LogFormat("[Color Morse #{0}] Solution: {1}{2} ({3})", _moduleId, sign == -1 ? "-" : "", solutionNum, Solution);
+
         BombModule.OnActivate += Activate;
     }
 
@@ -159,53 +160,56 @@ public class ColorMorseModule : MonoBehaviour
         }
     }
 
-    private bool HandlePress(int button)
+    private KMSelectable.OnInteractHandler HandlePress(int button)
     {
-        Audio.PlaySoundAtTransform("ColorMorseButtonPress", transform);
-        Buttons[button].AddInteractionPunch();
-        if (_isSolved)
-            return false;
-        char nextChar;
-        switch (button)
+        return delegate
         {
-            case 0:
-                nextChar = '.';
-                break;
-            case 1:
-                nextChar = '-';
-                break;
-            case 2:
-                nextChar = ' ';
-                break;
-            default:
-                nextChar = '.';
-                break;
-        }
-        if (Solution.StartsWith(SubmittedSolution + nextChar))
-        {
-            SubmittedSolution += nextChar;
-            if (nextChar == ' ')
-                Debug.LogFormat("[Color Morse #{0}] Character submitted correctly. Current Submission: “{1}”", _moduleId, SubmittedSolution);
-            if (Solution.Length == SubmittedSolution.Length)
-            {
-                BombModule.HandlePass();
-                _isSolved = true;
-                Debug.LogFormat("[Color Morse #{0}] Full solution submitted.", _moduleId);
-                flashingEnabled = false;
-                for (int i = 0; i < indicatorCount; i++)
-                    IndicatorMeshes[i].sharedMaterial = BlackMaterial;
-                SolutionScreenText.text = Solution.Replace('.', '•');
+            Audio.PlaySoundAtTransform("ColorMorseButtonPress", transform);
+            Buttons[button].AddInteractionPunch();
+            if (_isSolved)
                 return false;
+            char nextChar;
+            switch (button)
+            {
+                case 0:
+                    nextChar = '.';
+                    break;
+                case 1:
+                    nextChar = '-';
+                    break;
+                case 2:
+                    nextChar = ' ';
+                    break;
+                default:
+                    nextChar = '.';
+                    break;
             }
-        }
-        else
-        {
-            BombModule.HandleStrike();
-            Debug.LogFormat("[Color Morse #{0}] Submitted “{1}” incorrectly. Current submission: “{2}”. Resetting submission.", _moduleId, nextChar, SubmittedSolution);
-            SubmittedSolution = "";
-        }
-        SolutionScreenText.text = SubmittedSolution.Replace('.', '•') + "<color=#8f8>|</color>";
-        return false;
+            if (Solution.StartsWith(SubmittedSolution + nextChar))
+            {
+                SubmittedSolution += nextChar;
+                if (nextChar == ' ')
+                    Debug.LogFormat("[Color Morse #{0}] Character submitted correctly. Current Submission: “{1}”", _moduleId, SubmittedSolution);
+                if (Solution.Length == SubmittedSolution.Length)
+                {
+                    BombModule.HandlePass();
+                    _isSolved = true;
+                    Debug.LogFormat("[Color Morse #{0}] Full solution submitted.", _moduleId);
+                    flashingEnabled = false;
+                    for (int i = 0; i < indicatorCount; i++)
+                        IndicatorMeshes[i].sharedMaterial = BlackMaterial;
+                    SolutionScreenText.text = Solution.Replace('.', '•');
+                    return false;
+                }
+            }
+            else
+            {
+                BombModule.HandleStrike();
+                Debug.LogFormat("[Color Morse #{0}] Submitted “{1}” incorrectly. Current submission: “{2}”. Resetting submission.", _moduleId, nextChar, SubmittedSolution);
+                SubmittedSolution = "";
+            }
+            SolutionScreenText.text = SubmittedSolution.Replace('.', '•') + "<color=#8f8>|</color>";
+            return false;
+        };
     }
 
     private const float DOT_LENGTH = 0.2f;
