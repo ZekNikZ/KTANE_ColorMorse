@@ -61,7 +61,7 @@ public class ColorMorseModule : MonoBehaviour
             Buttons[i].OnInteract += HandlePress(i);
 
         reset:
-        PAREN_POS = Rnd.Range(0, 2);
+        var origParenPos = PAREN_POS = Rnd.Range(0, 2);
         Operators[0] = Rnd.Range(0, 4);
         Operators[1] = Rnd.Range(0, 4);
 
@@ -72,6 +72,7 @@ public class ColorMorseModule : MonoBehaviour
             Flashes[i] = MorseToBoolArray(MORSE_SYMBOLS[Numbers[i]]);
         }
 
+        // This changes the value of PAREN_POS if one of the colors is green
         int solutionNum;
         for (int i = 0; i < indicatorCount; i++)
             SolNumbers[i] = DoColorOperation(Colors[i], Numbers[i]);
@@ -101,7 +102,7 @@ public class ColorMorseModule : MonoBehaviour
         }
         Solution = Solution.Trim();
 
-        if (PAREN_POS == 0)
+        if (origParenPos == 0)
         {
             Labels[0].text = "(";
             Labels[3].gameObject.SetActive(false);
@@ -118,10 +119,12 @@ public class ColorMorseModule : MonoBehaviour
 
         for (int i = 0; i < indicatorCount; i++)
             Debug.LogFormat("[Color Morse #{0}] Number {1} is a {2} {3} ({4})", _moduleId, i, ColorNames[Colors[i]], Numbers[i], SYMBOLS[Numbers[i]]);
-        Debug.LogFormat("[Color Morse #{0}] Parentheses location: {1}", _moduleId, PAREN_POS == 0 ? "LEFT" : "RIGHT");
+        Debug.LogFormat("[Color Morse #{0}] Parentheses location: {1}", _moduleId, origParenPos == 0 ? "LEFT" : "RIGHT");
         Debug.LogFormat("[Color Morse #{0}] Operators: {1} and {2}", _moduleId, OPERATION_SYMBOLS[Operators[0]], OPERATION_SYMBOLS[Operators[1]]);
         for (int i = 0; i < indicatorCount; i++)
             Debug.LogFormat("[Color Morse #{0}] Number {1} after color operation is {2}", _moduleId, i, SolNumbers[i]);
+        if (origParenPos != PAREN_POS)
+            Debug.LogFormat("[Color Morse #{0}] Parentheses locations are imaginarily swapped because of green.", _moduleId);
         Debug.LogFormat("[Color Morse #{0}] Solution: {1}{2} ({3})", _moduleId, sign == -1 ? "-" : "", solutionNum, Solution);
 
         BombModule.OnActivate += Activate;
@@ -145,7 +148,6 @@ public class ColorMorseModule : MonoBehaviour
                 return num;
             case 1:
                 PAREN_POS = (PAREN_POS + 1) % 2;
-                Debug.LogFormat("[Color Morse #{0}] Parentheses locations are imaginarily swapped.", _moduleId);
                 return number;
             case 2:
                 return number % 3 == 0 ? number / 3 : number + Colors.Count(x => x == 0 || x == 4 || x == 5);
