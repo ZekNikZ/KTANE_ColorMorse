@@ -118,11 +118,11 @@ public class ColorMorseModule : MonoBehaviour
         }
 
         for (int i = 0; i < indicatorCount; i++)
-            Debug.LogFormat("[Color Morse #{0}] Number {1} is a {2} {3} ({4})", _moduleId, i, ColorNames[Colors[i]], Numbers[i], SYMBOLS[Numbers[i]]);
+            Debug.LogFormat("[Color Morse #{0}] LED {1} is a {2} {3} ({4})", _moduleId, i + 1, ColorNames[Colors[i]], Numbers[i], SYMBOLS[Numbers[i]]);
         Debug.LogFormat("[Color Morse #{0}] Parentheses location: {1}", _moduleId, origParenPos == 0 ? "LEFT" : "RIGHT");
         Debug.LogFormat("[Color Morse #{0}] Operators: {1} and {2}", _moduleId, OPERATION_SYMBOLS[Operators[0]], OPERATION_SYMBOLS[Operators[1]]);
         for (int i = 0; i < indicatorCount; i++)
-            Debug.LogFormat("[Color Morse #{0}] Number {1} after color operation is {2}", _moduleId, i, SolNumbers[i]);
+            Debug.LogFormat("[Color Morse #{0}] Number {1} after color operation is {2}", _moduleId, i + 1, SolNumbers[i]);
         if (origParenPos != PAREN_POS)
             Debug.LogFormat("[Color Morse #{0}] Parentheses locations are imaginarily swapped because of green.", _moduleId);
         Debug.LogFormat("[Color Morse #{0}] Solution: {1}{2} ({3})", _moduleId, sign == -1 ? "-" : "", solutionNum, Solution);
