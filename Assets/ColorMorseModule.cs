@@ -319,4 +319,15 @@ public class ColorMorseModule : MonoBehaviour
         yield return null;
         yield return buttons;
     }
+
+    private IEnumerator TwitchHandleForcedSolve()
+    {
+        char[] btnTexts = { '.', '-', ' ' };
+        int start = SubmittedSolution.Length;
+        for (int i = start; i < Solution.Length; i++)
+        {
+            Buttons[Array.IndexOf(btnTexts, Solution[i])].OnInteract();
+            yield return new WaitForSeconds(.1f);
+        }
+    }
 }
