@@ -81,9 +81,14 @@ public class ColorMorseModule : MonoBehaviour
         double sign, sol;
         try
         {
-            sol = PAREN_POS == 0
-                ? Op(Operators[1], Op(Operators[0], SolNumbers[0], SolNumbers[1]), SolNumbers[2])
-                : Op(Operators[0], SolNumbers[0], Op(Operators[1], SolNumbers[1], SolNumbers[2]));
+            // Special case: if the formula is A / (B / C) the calculation may run into float-point rounding errors.
+            // For this reason, calculate the result as A * C / B instead.
+            if (PAREN_POS == 1 && Operators[0] == 3 && Operators[1] == 3)
+                sol = SolNumbers[0] * SolNumbers[2] / SolNumbers[1];
+            else
+                sol = PAREN_POS == 0
+                    ? Op(Operators[1], Op(Operators[0], SolNumbers[0], SolNumbers[1]), SolNumbers[2])
+                    : Op(Operators[0], SolNumbers[0], Op(Operators[1], SolNumbers[1], SolNumbers[2]));
         }
         catch (DivideByZeroException)
         {
@@ -139,25 +144,25 @@ public class ColorMorseModule : MonoBehaviour
     {
         switch (color)
         {
-            case 0:
+            case 0: // Blue
                 int num = number * 3;
                 while (num > 9)
                 {
                     num = num.ToString().ToCharArray().Sum(x => x - '0');
                 }
                 return num;
-            case 1:
+            case 1: // Green
                 PAREN_POS = (PAREN_POS + 1) % 2;
                 return number;
-            case 2:
+            case 2: // Orange
                 return number % 3 == 0 ? number / 3 : number + Colors.Count(x => x == 0 || x == 4 || x == 5);
-            case 3:
+            case 3: // Purple
                 return 10 - number;
-            case 4:
+            case 4: // Red
                 return number % 2 == 1 ? number * 2 : number / 2;
-            case 5:
+            case 5: // Yellow
                 return number * number;
-            default:
+            default: // White
                 return number;
         }
     }
