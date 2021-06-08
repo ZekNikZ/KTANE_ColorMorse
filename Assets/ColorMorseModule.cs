@@ -328,10 +328,9 @@ public class ColorMorseModule : MonoBehaviour
     private IEnumerator TwitchHandleForcedSolve()
     {
         char[] btnTexts = { '.', '-', ' ' };
-        int start = SubmittedSolution.Length;
-        for (int i = start; i < Solution.Length; i++)
+        while (SubmittedSolution.Length < Solution.Length)
         {
-            Buttons[Array.IndexOf(btnTexts, Solution[i])].OnInteract();
+            Buttons[Array.IndexOf(btnTexts, Solution[SubmittedSolution.Length])].OnInteract();
             yield return new WaitForSeconds(.1f);
         }
     }
