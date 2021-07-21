@@ -467,6 +467,7 @@ GameObject:
   - component: {fileID: 114000014235531560}
   - component: {fileID: 114000012192429810}
   - component: {fileID: 114000012430111932}
+  - component: {fileID: 114992425455345302}
   - component: {fileID: 114000010064260028}
   m_Layer: 0
   m_Name: ColorMorseModule
@@ -1947,25 +1948,26 @@ MonoBehaviour:
   BombInfo: {fileID: 114000012192429810}
   BombModule: {fileID: 114000011813195044}
   Audio: {fileID: 114000012430111932}
+  RuleSeedable: {fileID: 114992425455345302}
   IndicatorMeshes:
   - {fileID: 23000010635698412}
   - {fileID: 23000012235501304}
   - {fileID: 23000014256181222}
   ColorMaterials:
-  - {fileID: 2100000, guid: 5d77e7e5725f6c7428deb7ec02013aec, type: 2}
-  - {fileID: 2100000, guid: 299c49777f238a14a9a8f27253cb794f, type: 2}
-  - {fileID: 2100000, guid: 36b0947cc735d0048832c6ee0068b8ef, type: 2}
-  - {fileID: 2100000, guid: 1de642eee3f1a714f9be116c7fe9f36d, type: 2}
   - {fileID: 2100000, guid: eb7696c77522b954aa4bb76694f58427, type: 2}
+  - {fileID: 2100000, guid: 36b0947cc735d0048832c6ee0068b8ef, type: 2}
   - {fileID: 2100000, guid: e159f707c0ac6a84883aa81370a6e293, type: 2}
+  - {fileID: 2100000, guid: 299c49777f238a14a9a8f27253cb794f, type: 2}
+  - {fileID: 2100000, guid: 5d77e7e5725f6c7428deb7ec02013aec, type: 2}
+  - {fileID: 2100000, guid: 1de642eee3f1a714f9be116c7fe9f36d, type: 2}
   - {fileID: 2100000, guid: 80eb31bf9f4c87b4b95f846ec1b75ce2, type: 2}
   ColorNames:
-  - BLUE
-  - GREEN
-  - ORANGE
-  - PURPLE
   - RED
+  - ORANGE
   - YELLOW
+  - GREEN
+  - BLUE
+  - PURPLE
   - WHITE
   BlackMaterial: {fileID: 2100000, guid: 8cc7ece41e4f0864cb32c52cb35ca247, type: 2}
   Labels:
@@ -2415,6 +2417,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Mobile/DiffuseTint
+--- !u!114 &114992425455345302
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014026283864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 3
 --- !u!135 &135000010491985402
 SphereCollider:
   m_ObjectHideFlags: 1
