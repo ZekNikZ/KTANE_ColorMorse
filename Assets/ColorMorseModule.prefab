@@ -126,7 +126,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011254187272}
   - component: {fileID: 33000011090416718}
-  - component: {fileID: 135000010491985402}
   - component: {fileID: 23000014256181222}
   - component: {fileID: 114000013625178930}
   m_Layer: 0
@@ -374,7 +373,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012861065472}
   - component: {fileID: 33000013505549902}
-  - component: {fileID: 135000014198158102}
   - component: {fileID: 23000010635698412}
   - component: {fileID: 114000013442578324}
   m_Layer: 0
@@ -445,7 +443,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010156832628}
   - component: {fileID: 33000010805436510}
-  - component: {fileID: 135000011538779432}
   - component: {fileID: 23000012235501304}
   - component: {fileID: 114000013181976964}
   m_Layer: 0
@@ -2428,43 +2425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seed: 3
---- !u!135 &135000010491985402
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011801664828}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135000011538779432
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013960653788}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135000014198158102
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013499948098}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  _seed: 1
 --- !u!136 &136000010491052258
 CapsuleCollider:
   m_ObjectHideFlags: 1
